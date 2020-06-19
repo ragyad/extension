@@ -11,12 +11,12 @@ import java.util.logging.Logger;
 
 public class SpotifyClientConnectionBase {
 
-    private static final String token = "BQBrvQeQnb86nRFM5B4xIneBJ1Pcq1StMSsejexrKVaee6azXnHfIoUDBtRy2Hx4fByPsUrhYohsZHEwQBErsp-fTbdznBBs9VLr-kViadzEKz-wWP62zEDq6FjRko8J7dG6NlLDf40sC7RfNQmvJP8HMfzb_C2-kPHpsB5zFvsCfS4kMweQhH9-p8JRc2pDUm5nN1MP74WlixTlj9mFK1xXzvtI94g";
+    private static final String token = "BQAx-6NCnRjzY6Ewu66CFNKli_yV2g7BplZiUotdk9m2ZHT7UAp30KJXSaifXzilKQIhLxgZzyshk3bjTmDp1JdJqRrGE8YYkKITWUwYtE1MYTrTWk6PypXWxFygy6rMejb7fD_FQSxaMtA4dOiZvaeoIcg7FMPlde1USjWZr9Fft2Bt3DN0CIrvFzx4nB5EIY6jtNPLLkf5iK6N4MPYa0a9XLjWD_U";
     private static final Client client = ClientBuilder.newClient();
     private static final Logger logger = Logger.getLogger(SpotifyClientConnectionBase.class.getName());
 
     public SpotifyClientConnectionBase() {
-        client.register(Header.class);
+        //client.register(Header.class);
     }
 
     public String getResponse(String endPoint, Map<String, Object> queryParams, String httpMethod, Object objectToPost){

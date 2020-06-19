@@ -37,16 +37,19 @@ public class SpotifyClientBase {
             JSONObject obj = (JSONObject) (new JSONParser()).parse(responseStr);
             obj = (JSONObject) obj.get("artists");
             JSONArray arr = (JSONArray) obj.get("items");
-            arr.stream().forEach((entity) -> {
-                try {
-                    artists.add(objectMapper.readValue(entity.toString(), Artist.class));
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-            });
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+            if (arr != null) {
+                arr.stream().forEach((entity) -> {
+                    try {
+                        artists.add(objectMapper.readValue(entity.toString(), Artist.class));
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+            } catch(ParseException e){
+                e.printStackTrace();
+            }
+
 
         return artists;
     }

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 //Fields
 //"external_urls": {"spotify": "https://open.spotify.com/artist/08td7MxkoHQkXnWAYD8d6Q"},
 //"followers": {"href": null,"total": 203},
@@ -48,6 +50,10 @@ public class Artist {
     @JsonProperty("uri")
     private String uri;
 
+    @JsonProperty("images")
+    private List<Image> images;
+
+
     public String getId() {
         return id;
     }
@@ -78,5 +84,13 @@ public class Artist {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 }

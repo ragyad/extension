@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class Header implements ContainerRequestFilter {
 
-    private static final String token = "BQBiHtLXYYOoi-xhs6xAvLc2-ukq9oXBHZGRxQ177ekq2gGIgk_VxNU4RrQ_DTKEpE3FSpLQ3dB-Z1_iomrMDEYasVCwVwxaN72SLl7uDTZuGyYL5khJq7HaWpvVAOhW8wlLDjxF2Il1-vbRyawgyq3QfG_C9QIKYu3xzDu2OdH7ZZ8vVFCy2Ei70RSiy8lIeftUHQ0vQe2i4ovQQdNVvA4IurOyaZs";
+    private static final String token = "BQC9MURu-wR8Z_Uz1XCXEJxSPsWyfZJwYZBI0lpf8gy378g5PUySIAcWR-GSmt8ZHEKXfzv76jaM8u6Rt-3UL3dj-e0lBqAjQO2kUa6yA1qfds6BOLMX5MkwTdA8sMsVhIi8xXK7jkq3xBlNHyXVcUvXue4gddikHIq5hcnNaoYOyfZdm1h-GurmQzPsbJRX7m7zOmPmYduBiB0EQv9QEfjWgjC3C58";
 
 
     public void filter(ContainerRequestContext containerRequestContext) throws IOException {

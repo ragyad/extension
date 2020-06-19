@@ -1,7 +1,12 @@
 package com.ragini.spotify.extension;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.ragini.spotify.extension.beans.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -10,34 +15,35 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Component
-@Path("/SpotifyClient")
+@RestController
 public class SpotifyClient extends SpotifyClientBase{
 
     List<Artist> artists = null;
     Artist selectedArtist = null;
 
-    @GET
-    @Path("/searchArtists")
-    public List<Artist> searchArtists( @QueryParam("q") String q) {
+
+    @GetMapping("/searchArtists")
+    public String searchArtists(@RequestParam("q") String q) {
         artists = searchArtists(q, "artist");
-        return artists;
+        artists = artists.stream().filter(artist -> artist.getImages()!=null && !artist.getImages().isEmpty()).collect(Collectors.toList());
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(artists);
+        //return artists;
     }
 
-    @GET
-    @Path("/{id}")
-    public Artist getArtist(@PathParam("id") String artistId) {
+    @GetMapping("/Artist")
+    public String getArtist(@RequestParam("id") String artistId) {
         List<Artist> temp = null;
         if(artists!=null) {
             temp = artists.stream().filter(artist -> artist.getId().equals(artistId)).collect(Collectors.toList());
         }
         selectedArtist = temp!=null?temp.get(0):null;
-        return selectedArtist;
+        Gson gson = new Gson();
+        return gson.toJson(selectedArtist);
     }
 
-    @GET
-    @Path("/{id}")
-    public String createPlaylist(@PathParam("id") String artistId) {
+    @GetMapping("/createPlaylist")
+    public String createPlaylist(@RequestParam("id") String artistId) {
         //get all albums from the above id
         List<Album> albums = getAlbumsByArtist(selectedArtist.getId());
 
