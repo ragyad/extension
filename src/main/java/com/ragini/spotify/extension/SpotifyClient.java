@@ -31,8 +31,7 @@ public class SpotifyClient extends SpotifyClientBase{
         //return artists;
     }
 
-    @GetMapping("/Artist")
-    public String getArtist(@RequestParam("id") String artistId) {
+    private String getArtist(String artistId) {
         List<Artist> temp = null;
         if(artists!=null) {
             temp = artists.stream().filter(artist -> artist.getId().equals(artistId)).collect(Collectors.toList());
@@ -43,8 +42,9 @@ public class SpotifyClient extends SpotifyClientBase{
     }
 
     @GetMapping("/createPlaylist")
-    public String createPlaylist(@RequestParam("id") String artistId) {
+    public String createPlaylist(@RequestParam("artistId") String artistId) {
         //get all albums from the above id
+        getArtist(artistId);
         List<Album> albums = getAlbumsByArtist(selectedArtist.getId());
 
         //get all tracks from those albums
@@ -60,6 +60,7 @@ public class SpotifyClient extends SpotifyClientBase{
         //add above tracks to the artist
         String response = addTracksToPlaylist(playlist.getId(), tracks);
 
-        return response;
+        Gson gson = new Gson();
+        return gson.toJson(response);
     }
 }

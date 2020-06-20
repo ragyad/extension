@@ -46,6 +46,10 @@ body {
     text-align: center;
 }
 
+.artistList{
+    max-height: 400px;
+}
+
 .figCap{
     font-size: 16px;
     line-height: 24px;
@@ -57,8 +61,8 @@ body {
 }
 
 .image{
-    height: 80%;
-    width: 100%;
+    display: block;
+    max-height: 85%;
 }
 
 .box{box-shadow:0 0 5px #7e7d7d;text-align:center}
