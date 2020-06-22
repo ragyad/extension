@@ -56,11 +56,26 @@ public class SpotifyClientBase {
 
     public List<Album> getAlbumsByArtist(String artistId){
         String endPoint = BASE_URL+"/artists/" + artistId + "/albums";
-        String responseStr = connectionBase.getResponse(endPoint, null, Constants.GET, null);
+
+        String allAlbumsResponseStr = connectionBase.getResponse(endPoint, getQueryParamsForAllAlbums(), Constants.GET, null);
+        String allSinglesResponseStr = connectionBase.getResponse(endPoint, getQueryParamsForAllSingles(), Constants.GET, null);
+        String allAppearOnsResponseStr = connectionBase.getResponse(endPoint, getQueryParamsForAllAppearOns(), Constants.GET, null);
+        String allCompilationsResponseStr = connectionBase.getResponse(endPoint, getQueryParamsForAllCompilation(), Constants.GET, null);
+
+
         List<Album> albums = new ArrayList<Album>();
         try {
-            JSONObject obj = (JSONObject) (new JSONParser()).parse(responseStr);
-            JSONArray arr = (JSONArray) obj.get("items");
+            JSONObject allAlbumsObj = (JSONObject) (new JSONParser()).parse(allAlbumsResponseStr);
+            JSONObject allSinglesObj = (JSONObject) (new JSONParser()).parse(allSinglesResponseStr);
+            JSONObject allAppearOnObj = (JSONObject) (new JSONParser()).parse(allAppearOnsResponseStr);
+            JSONObject allCompilationsObj = (JSONObject) (new JSONParser()).parse(allCompilationsResponseStr);
+
+
+            JSONArray arr = (JSONArray) allAlbumsObj.get("items");
+            arr.addAll((JSONArray) allSinglesObj.get("items"));
+            arr.addAll((JSONArray) allAppearOnObj.get("items"));
+            arr.addAll((JSONArray) allCompilationsObj.get("items"));
+
             arr.stream().forEach(entity-> {
                 try {
                     albums.add(objectMapper.readValue(entity.toString(), Album.class));
@@ -150,5 +165,42 @@ public class SpotifyClientBase {
 
         String responseStr = connectionBase.getResponse(endPoint, queryParams, Constants.POST, null);
         return responseStr.contains(Constants.ERROR) ? Constants.FAILURE : Constants.SUCCESS;
+    }
+
+    //get All Albums
+    private Map getQueryParamsForAllAlbums(){
+        Map queryParams = new HashMap();
+        queryParams.put("limit", 50);
+        queryParams.put("include_groups", "album");
+
+        return queryParams;
+    }
+
+    //get All singles
+    private Map getQueryParamsForAllSingles(){
+        Map queryParams = new HashMap();
+        queryParams.put("limit", 50);
+        queryParams.put("include_groups", "single");
+
+        return queryParams;
+    }
+
+
+    //get All appears_ons
+    private Map getQueryParamsForAllAppearOns(){
+        Map queryParams = new HashMap();
+        queryParams.put("limit", 50);
+        queryParams.put("include_groups", "appears_on");
+
+        return queryParams;
+    }
+
+    //get All Compilations
+    private Map getQueryParamsForAllCompilation(){
+        Map queryParams = new HashMap();
+        queryParams.put("limit", 50);
+        queryParams.put("include_groups", "compilation");
+
+        return queryParams;
     }
 }
